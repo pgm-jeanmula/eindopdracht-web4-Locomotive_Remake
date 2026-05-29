@@ -1,47 +1,85 @@
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-/* LENIS */
-const lenis = new Lenis();
+const lenis = new Lenis({
+  smoothWheel: true
+});
 
 function raf(time) {
   lenis.raf(time);
   requestAnimationFrame(raf);
 }
+
 requestAnimationFrame(raf);
 
-/* SPLIT HELPER */
-function split(el) {
-  return new SplitText(el, { type: "words" });
-}
+const loaderTl = gsap.timeline();
 
-/* HERO */
-const heroSplit = split(document.querySelector(".hero h1"));
+loaderTl
 
-gsap.from(heroSplit.words, {
+.from(".loader-text", {
   y: 120,
   opacity: 0,
-  stagger: 0.06,
   duration: 1.2,
   ease: "power4.out"
+})
+
+.to(".loader", {
+  yPercent: -100,
+  duration: 1.2,
+  ease: "power4.inOut",
+  delay: .3
 });
 
-/* INTRO */
-const introSplit = split(document.querySelector(".big-text"));
+function animateSplit(selector) {
 
-gsap.from(introSplit.words, {
+  document.querySelectorAll(selector).forEach(el => {
+
+    const split = new SplitText(el, {
+      type: "chars"
+    });
+
+    gsap.from(split.chars, {
+
+      yPercent: 120,
+
+      opacity: 0,
+
+      stagger: 0.02,
+
+      duration: 1.2,
+
+      ease: "power4.out",
+
+      scrollTrigger: {
+        trigger: el,
+        start: "top 85%"
+      }
+
+    });
+
+  });
+
+}
+
+animateSplit(".split");
+
+gsap.to(".hero-inner", {
+
+  yPercent: -20,
+
+  ease: "none",
+
   scrollTrigger: {
-    trigger: ".intro",
-    start: "top 80%"
-  },
-  y: 80,
-  opacity: 0,
-  stagger: 0.05
+    trigger: ".hero",
+    start: "top top",
+    end: "bottom top",
+    scrub: true
+  }
+
 });
 
-/* PANEL 1 PIN */
-const panel1Split = split(document.querySelectorAll(".panel h2")[0]);
 
 gsap.timeline({
+
   scrollTrigger: {
     trigger: ".panel-dark",
     start: "top top",
@@ -49,17 +87,16 @@ gsap.timeline({
     scrub: true,
     pin: true
   }
+
 })
-.from(panel1Split.words, {
+
+.from(".panel-dark p", {
   y: 100,
-  opacity: 0,
-  stagger: 0.08
+  opacity: 0
 });
 
-/* PANEL 2 PIN */
-const panel2Split = split(document.querySelectorAll(".panel h2")[1]);
-
 gsap.timeline({
+
   scrollTrigger: {
     trigger: ".panel-light",
     start: "top top",
@@ -67,66 +104,56 @@ gsap.timeline({
     scrub: true,
     pin: true
   }
+
 })
-.from(panel2Split.words, {
+
+.from(".panel-light p", {
   y: 100,
-  opacity: 0,
-  stagger: 0.08
+  opacity: 0
 });
-
-/* OUTRO */
-const outroSplit = split(document.querySelector(".outro h3"));
-
-gsap.from(outroSplit.words, {
-  scrollTrigger: {
-    trigger: ".outro",
-    start: "top 80%"
-  },
-  y: 60,
-  opacity: 0,
-  stagger: 0.06
-});
-
-/* =========================
-   MAGNETIC LETTERS
-========================= */
 
 const magneticElements = document.querySelectorAll(".magnetic-text");
 
 magneticElements.forEach(el => {
 
-  // split letters
   el.innerHTML = el.textContent
     .split("")
     .map(letter => {
-      if(letter === " ") {
+
+      if (letter === " ") {
         return `<span class="char">&nbsp;</span>`;
       }
 
       return `<span class="char">${letter}</span>`;
+
     })
     .join("");
 
   const chars = el.querySelectorAll(".char");
 
-  el.addEventListener("mousemove", e => {
+  chars.forEach(char => {
 
-    const rect = el.getBoundingClientRect();
+    const xTo = gsap.quickTo(char, "x", {
+      duration: 0.4,
+      ease: "power3"
+    });
 
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const yTo = gsap.quickTo(char, "y", {
+      duration: 0.4,
+      ease: "power3"
+    });
 
-    chars.forEach(char => {
+    const rTo = gsap.quickTo(char, "rotation", {
+      duration: 0.4,
+      ease: "power3"
+    });
 
-      const charRect = char.getBoundingClientRect();
+    el.addEventListener("mousemove", e => {
 
-      const charX =
-        charRect.left +
-        charRect.width / 2;
+      const rect = char.getBoundingClientRect();
 
-      const charY =
-        charRect.top +
-        charRect.height / 2;
+      const charX = rect.left + rect.width / 2;
+      const charY = rect.top + rect.height / 2;
 
       const distX = e.clientX - charX;
       const distY = e.clientY - charY;
@@ -135,41 +162,32 @@ magneticElements.forEach(el => {
         distX * distX + distY * distY
       );
 
-      if(distance < 120) {
+      if (distance < 120) {
 
-        gsap.to(char, {
-          x: -distX * 0.3,
-          y: -distY * 0.3,
-          rotation: -distX * 0.05,
-          duration: 0.4,
-          ease: "power3.out"
-        });
+        xTo(-distX * 0.3);
+        yTo(-distY * 0.3);
+        rTo(-distX * 0.08);
 
       } else {
 
-        gsap.to(char, {
-          x: 0,
-          y: 0,
-          rotation: 0,
-          duration: 0.8,
-          ease: "elastic.out(1,0.3)"
-        });
+        xTo(0);
+        yTo(0);
+        rTo(0);
 
       }
 
     });
 
-  });
+    el.addEventListener("mouseleave", () => {
 
-  el.addEventListener("mouseleave", () => {
+      gsap.to(char, {
+        x: 0,
+        y: 0,
+        rotation: 0,
+        duration: 1,
+        ease: "elastic.out(1,0.4)"
+      });
 
-    gsap.to(chars, {
-      x: 0,
-      y: 0,
-      rotation: 0,
-      duration: 1,
-      stagger: 0.01,
-      ease: "elastic.out(1,0.4)"
     });
 
   });
