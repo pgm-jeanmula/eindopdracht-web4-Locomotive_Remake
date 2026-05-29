@@ -24,7 +24,8 @@ body {
   background: var(--bg);
   color: white;
   overflow-x: hidden;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
 }
 
 .nav {
@@ -92,15 +93,15 @@ body {
 
 .hero h1 {
 
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Cormorant Garamond', serif;
 
-  font-size: clamp(4rem, 10vw, 11rem);
+  font-size: clamp(5rem, 11vw, 12rem);
 
-  line-height: .88;
+  line-height: .82;
 
-  letter-spacing: -.05em;
+  letter-spacing: -.04em;
 
-  max-width: 10ch;
+  font-weight: 400;
 }
 
 .hero-text {
@@ -160,13 +161,15 @@ body {
 
 .panel h2 {
 
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Cormorant Garamond', serif;
 
-  font-size: clamp(4rem, 9vw, 9rem);
+  font-size: clamp(5rem, 10vw, 10rem);
 
-  line-height: .9;
+  line-height: .82;
 
-  letter-spacing: -.05em;
+  letter-spacing: -.04em;
+
+  font-weight: 400;
 }
 
 .panel p {
@@ -203,6 +206,12 @@ body {
   max-width: 10ch;
 }
 
+.nav,
+.footer-col a,
+.hero-label {
+    font-weight: 400;
+}
+
 .footer {
 
   background: var(--light);
@@ -212,6 +221,8 @@ body {
   padding: 4rem;
 
   overflow: hidden;
+
+  font-family: 'Cormorant Garamond', serif;
 }
 
 .footer-top {
@@ -264,17 +275,15 @@ body {
 
 .footer-title {
 
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Cormorant Garamond', serif;
 
-  font-size: clamp(5rem, 11vw, 12rem);
+  font-size: clamp(6rem, 12vw, 14rem);
 
-  line-height: .85;
+  line-height: .78;
+
+  letter-spacing: -.06em;
 
   font-weight: 400;
-
-  letter-spacing: -.07em;
-
-  max-width: 9ch;
 }
 
 .footer-contact {
@@ -289,6 +298,11 @@ body {
   will-change: transform;
 
   transform-origin: center center;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 @media (max-width: 768px) {
