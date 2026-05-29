@@ -24,26 +24,7 @@ body {
   background: var(--bg);
   color: white;
   overflow-x: hidden;
-
-  font-family: 'Inter', sans-serif;
-}
-
-.loader {
-  position: fixed;
-  inset: 0;
-
-  background: black;
-
-  z-index: 9999;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loader-text {
-  font-size: clamp(3rem, 8vw, 8rem);
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Cormorant Garamond', serif;
 }
 
 .nav {
