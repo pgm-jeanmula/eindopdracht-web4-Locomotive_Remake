@@ -120,6 +120,9 @@ Bestandsnaam
 |>reset.css
 |>style.css
 
+|images
+|>foto logo
+
 |js
 |>script.js
 
