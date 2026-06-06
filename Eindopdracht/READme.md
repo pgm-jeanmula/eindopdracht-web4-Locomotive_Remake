@@ -2,10 +2,6 @@
 
 Dit project is een remake van een awwward-winning website met als doel het **pixel-perfect herbouwen van een pagina**, met een sterke focus op **motion design, scroll-gedreven interactie en clean GSAP code**.
 
-Gekozen referentie:
-:contentReference[oaicite:0]{index=0}
-
----
 
 ## Opdrachtomschrijving
 

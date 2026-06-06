@@ -1,0 +1,13 @@
+{
+  "name": "eindopdracht",
+  "version": "1.0.0",
+  "description": "Dit project is een remake van een awwward-winning website met als doel het **pixel-perfect herbouwen van een pagina**, met een sterke focus op **motion design, scroll-gedreven interactie en clean GSAP code**.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
